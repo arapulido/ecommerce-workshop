@@ -9,7 +9,7 @@ module Spree
       @products = @products.includes(:possible_promotions) if @products.respond_to?(:includes)
       @taxonomies = Spree::Taxonomy.includes(root: :children)
       @discounts = helpers.get_discounts.sample
-      @ads = helpers.get_ads.sample
+      @ads = helpers.get_ads("home").sample
       @ads['base64'] = Base64.encode64(open('http://advertisements:5002/banners/' + @ads['path']).read).gsub("\n", '')
     end
   end

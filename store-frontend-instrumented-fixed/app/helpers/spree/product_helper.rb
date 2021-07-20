@@ -1,7 +1,12 @@
 module Spree
     module ProductHelper
-        def get_ads
-            @ads = JSON.parse(Net::HTTP.get_response(URI('http://advertisements:5002/ads')).body)
+        def get_ads(page)
+            uri = URI.parse('http://advertisements:5002/ads')
+            http = Net::HTTP.new(uri.host, uri.port)
+            req = Net::HTTP::Get.new(uri.request_uri)
+            req['page-source'] = page
+            res = http.request(req)
+            @ads = JSON.parse(res.body)
           end
     end
 
